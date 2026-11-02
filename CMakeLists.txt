@@ -59,6 +59,12 @@ if(UNIX)
     add_ch1_example(simple-ls-stat src/ch1_intro/simple-ls-stat.c)
     add_ch1_example(simple-shell src/ch1_intro/simple-shell.c)
     add_ch1_example(simple-shell2 src/ch1_intro/simple-shell2.c)
+    add_executable(welcome EXCLUDE_FROM_ALL src/ch1_intro/welcome.c)
+    configure_c_target(welcome)
+    target_compile_definitions(welcome PRIVATE _POSIX_C_SOURCE=200809L)
+    set_target_properties(welcome PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bin/ch1_intro"
+    )
     add_ch1_example(welcome-fixed src/ch1_intro/welcome-fixed.c)
 else()
     message(STATUS "Skipping ch1_intro examples: they require a POSIX platform")

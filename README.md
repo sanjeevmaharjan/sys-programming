@@ -1,25 +1,20 @@
 # System Programming
 
-A C17 project for system programming exercises and examples.
+A C project for system programming exercises and examples.
 
 ## Project layout
 
 ```text
 .
 ├── CMakeLists.txt
-├── include/
-│   └── sysprog/       # Public headers, grouped by topic
 ├── src/               # Application and implementation source files
-├── tests/             # Tests registered with CTest
+├── tests/             # Tests registered with CTest (unused)
 └── build/             # Generated build files (not tracked)
 ```
 
-As the project grows, organize source and headers by topic, such as processes,
-files, memory, or threads.
-
 ## Build
 
-Requirements: CMake 3.16+ and a C17 compiler.
+Requirements: CMake (`3.16+`) and a C (`C17`) compiler.
 
 ```sh
 cmake -S . -B build
@@ -42,4 +37,9 @@ binary from `build/bin/ch1_intro/`. Examples:
 | `simple-ls-stat` | `./build/bin/ch1_intro/simple-ls-stat src/ch1_intro` |
 | `simple-shell` | `printf 'date\n' \| ./build/bin/ch1_intro/simple-shell` (enters `date` at the prompt) |
 | `simple-shell2` | `printf 'date\n' \| ./build/bin/ch1_intro/simple-shell2` (enters `date` at the prompt) |
+| `welcome` | `./build/bin/ch1_intro/welcome` |
 | `welcome-fixed` | `./build/bin/ch1_intro/welcome-fixed` |
+
+`welcome` is excluded from the default build-all. Build it on demand with
+`cmake --build build --target welcome`. Its source is intentionally erroneous,
+so compilation will fail by design.
