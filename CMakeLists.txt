@@ -24,7 +24,7 @@ function(configure_c_target target)
 endfunction()
 
 configure_c_target(sys_programming)
-target_include_directories(sys_programming PRIVATE "${PROJECT_SOURCE_DIR}/include")
+# target_include_directories(sys_programming PRIVATE "${PROJECT_SOURCE_DIR}/include")
 
 if(DEBUG_SOURCE)
     if(NOT EXISTS "${DEBUG_SOURCE}")
@@ -34,7 +34,7 @@ if(DEBUG_SOURCE)
     add_executable(debug_current "${DEBUG_SOURCE}")
     configure_c_target(debug_current)
     target_compile_definitions(debug_current PRIVATE _POSIX_C_SOURCE=200809L)
-    target_include_directories(debug_current PRIVATE "${PROJECT_SOURCE_DIR}/include")
+    # target_include_directories(debug_current PRIVATE "${PROJECT_SOURCE_DIR}/include")
     set_target_properties(debug_current PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bin/debug"
         RUNTIME_OUTPUT_DIRECTORY_DEBUG "${PROJECT_BINARY_DIR}/bin/debug"
