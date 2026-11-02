@@ -37,9 +37,8 @@ binary from `build/bin/ch1_intro/`. Examples:
 | `simple-ls-stat` | `./build/bin/ch1_intro/simple-ls-stat src/ch1_intro` |
 | `simple-shell` | `printf 'date\n' \| ./build/bin/ch1_intro/simple-shell` (enters `date` at the prompt) |
 | `simple-shell2` | `printf 'date\n' \| ./build/bin/ch1_intro/simple-shell2` (enters `date` at the prompt) |
-| `welcome` | `./build/bin/ch1_intro/welcome` |
 | `welcome-fixed` | `./build/bin/ch1_intro/welcome-fixed` |
 
-`welcome` is excluded from the default build-all. Build it on demand with
-`cmake --build build --target welcome`. Its source is intentionally erroneous,
-so compilation will fail by design.
+> `welcome` is excluded from the default build-all. Build it on demand with
+> `cmake --build build --target welcome`. Its source is intentionally erroneous,
+> so compilation will fail by design.
