@@ -1,4 +1,4 @@
 # Tests
 
-Add test sources here and register them with CTest from `CMakeLists.txt`.
-Run the configured tests with `ctest --test-dir build --output-on-failure`.
+Add GoogleTest test sources here. Build and run them from the repository root
+with `make test`. GoogleTest and `pkg-config` must be installed.
