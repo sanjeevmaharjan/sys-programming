@@ -6,16 +6,21 @@ CXXFLAGS ?= -std=c++17 -Wall -Wextra -Wpedantic
 
 BUILD_DIR := build
 CH1_DIR := $(BUILD_DIR)/bin/ch1_intro
+CH5_DIR := $(BUILD_DIR)/bin/ch05_process
 DEBUG_DIR := $(BUILD_DIR)/bin/debug
-CH1_TARGETS := hw pid simple-cat simple-cat2 simple-ls simple-ls-stat \
-	simple-shell simple-shell2 welcome-fixed
-CH1_BINARIES := $(addprefix $(CH1_DIR)/,$(CH1_TARGETS))
+CH1_TARGETS := ch01-hw ch01-pid ch01-simple-cat ch01-simple-cat2 \
+	ch01-simple-ls ch01-simple-ls-stat ch01-simple-shell ch01-simple-shell2 \
+	ch01-welcome-fixed
+CH1_BINARIES := $(patsubst ch01-%, $(CH1_DIR)/%, $(CH1_TARGETS))
+CH5_TARGETS := ch05-hw ch05-argv ch05-entry ch05-exit-handlers \
+	ch05-forkflush ch05-memory-layout ch05-zombies
+CH5_BINARIES := $(patsubst ch05-%, $(CH5_DIR)/%, $(CH5_TARGETS))
 GTEST_CXXFLAGS ?= $(shell pkg-config --cflags gtest 2>/dev/null)
 GTEST_LIBS ?= $(shell pkg-config --libs gtest_main 2>/dev/null)
 
-.PHONY: all build test clean debug-current welcome $(CH1_TARGETS)
+.PHONY: all build test clean debug-current ch01-welcome $(CH1_TARGETS) $(CH5_TARGETS)
 
-all: $(BUILD_DIR)/sys_programming $(CH1_BINARIES)
+all: $(BUILD_DIR)/sys_programming $(CH1_BINARIES) $(CH5_BINARIES)
 
 build: all
 
@@ -27,9 +32,15 @@ $(CH1_DIR)/%: src/ch01_intro/%.c
 	mkdir -p $(@D)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -D_POSIX_C_SOURCE=200809L $< -o $@
 
-$(CH1_TARGETS): %: $(CH1_DIR)/%
+$(CH1_TARGETS): ch01-%: $(CH1_DIR)/%
 
-welcome: $(CH1_DIR)/welcome
+$(CH5_DIR)/%: src/ch05_process/%.c
+	mkdir -p $(@D)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -D_POSIX_C_SOURCE=200809L $< -o $@
+
+$(CH5_TARGETS): ch05-%: $(CH5_DIR)/%
+
+ch01-welcome: $(CH1_DIR)/welcome
 
 $(BUILD_DIR)/tests/sys_programming_test: tests/sys_programming_test.cpp $(BUILD_DIR)/sys_programming
 	mkdir -p $(@D)

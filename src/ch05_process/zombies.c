@@ -30,8 +30,21 @@ main(int argc, char **argv) {
 			 * the child. */
 			exit(0);
 		} else {
+			char ps_command[64];
+			int ps_status;
+
 			printf("====\n");
-			system("ps a | grep '[^ ]'a.ou[t]");
+			snprintf(ps_command, sizeof(ps_command),
+					"ps -o pid,ppid,stat,comm -p %ld", (long)pid);
+			ps_status = system(ps_command);
+			if (ps_status == -1) {
+				perror("system");
+				exit(EXIT_FAILURE);
+			}
+			if (!WIFEXITED(ps_status) || WEXITSTATUS(ps_status) != 0) {
+				fprintf(stderr, "%s: ps command failed\n", argv[0]);
+				exit(EXIT_FAILURE);
+			}
 			/* We don't wait for our children.  This allows
 			 * them to become zombies.  We sleep for a short
 			 * time to delay the next iteration of the loop.
@@ -45,6 +58,6 @@ main(int argc, char **argv) {
 		}
 	}
 	printf("That's enough zombies. Let's have init clean them up.\n");
-	printf("Remember to run 'ps a | grep a.ou[t]' to verify.\n");
+	printf("Look for child processes marked Z in the output above.\n");
 	exit(0);
 }
